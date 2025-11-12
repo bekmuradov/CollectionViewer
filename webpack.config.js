@@ -17,7 +17,7 @@ module.exports = {
   },
   externals: {
     'react': 'React',
-    'react-dom': 'ReactDOM'
+    // 'react-dom': 'ReactDOM'
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
@@ -45,25 +45,6 @@ module.exports = {
       filename: "remoteEntry.js",
       exposes: {
         "./CollectionViewerFunctionalModule": "./src/index",
-      },
-      shared: {
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
-          eager: false,        // FIXED: Wait for host's React instance
-          strictVersion: false // Allow version flexibility
-        },
-        "react-dom": {
-          singleton: true,
-          requiredVersion: deps["react-dom"],
-          eager: false,        // FIXED: Wait for host's React instance
-          strictVersion: false
-        },
-        "react/jsx-runtime": { // ADDED: Share JSX runtime
-          singleton: true,
-          eager: false,
-          strictVersion: false
-        }
       }
     }),
     new HtmlWebpackPlugin({
