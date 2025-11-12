@@ -18,16 +18,20 @@ CollectionViewer/
 ├── src/
 │   ├── CollectionViewer.tsx    # Main functional component with hooks
 │   ├── CollectionViewer.css    # Styles with dark mode support
+│   ├── DevStandalone.tsx       # Development wrapper (simulates host)
 │   ├── HttpClient.ts           # HTTP client for API calls
 │   ├── CollectionRepository.ts # Repository for collections data
 │   ├── types.ts                # TypeScript interfaces
-│   └── index.ts                # Entry point
+│   └── index.ts                # Production entry point
 ├── public/
-│   └── index.html              # Standalone test page
-├── dist/                       # Build output (generated)
+│   ├── index.html              # Production test page
+│   └── dev-index.html          # Development page template
+├── dist/                       # Production build output
+├── dev-dist/                   # Development build output
 ├── lifecycle_manager.py        # Plugin lifecycle management
 ├── package.json                # Dependencies
-├── webpack.config.js           # Webpack configuration (FIXED: eager: false)
+├── webpack.config.js           # Production webpack config
+├── webpack.dev.js              # Development webpack config
 ├── tsconfig.json               # TypeScript configuration
 └── README.md                   # This file
 ```
@@ -49,15 +53,31 @@ npm run build
 
 This creates the `dist/` folder with `remoteEntry.js` required by BrainDrive.
 
-### 3. Development Mode (Optional)
+### 3. Development Mode with Hot Reload ⚡
 
-For development with hot reload:
+For local development with a **standalone dev server that simulates the BrainDrive host**:
 
 ```bash
 npm run dev
+# or
+npm start
 ```
 
-This starts a dev server on `http://localhost:3002`
+This will:
+- Start a dev server on `http://localhost:3002`
+- **Auto-open your browser**
+- Load `DevStandalone.tsx` which wraps your plugin with mock services
+- Enable **Hot Module Replacement** - edit files and see changes instantly!
+- Provide a **theme toggle button** to test dark/light modes
+- Include **mock collections data** for testing
+
+**What you get in dev mode:**
+- 🔥 Hot reload - no manual refresh needed
+- 🎨 Live theme switching (light/dark)
+- 📡 Mock API with sample collections data
+- 🖥️ Simulated BrainDrive host environment
+- 🎯 Development controls overlay
+- 📊 Console logging for all service calls
 
 ## Key Fix: Webpack Configuration
 
@@ -92,6 +112,73 @@ shared: {
 - This creates **duplicate React instances** with uninitialized hooks dispatchers
 - **`eager: false`** makes plugins wait for the host's shared React instance
 - This ensures **hooks work correctly** in functional components
+
+---
+
+## DevStandalone Architecture
+
+The `DevStandalone.tsx` file provides a **complete development environment** that simulates the BrainDrive host system. This allows you to develop and test your plugin in isolation without needing the full BrainDrive application.
+
+### What DevStandalone Provides
+
+**1. Mock Services**
+- **Theme Service** - Manages light/dark theme with localStorage persistence
+- **API Service** - Returns mock collections data with simulated network delays
+- **Settings Service** - Mock configuration management
+- **Page Context Service** - Simulates page metadata
+
+**2. Development UI**
+- **Theme Toggle Button** - Switch between light/dark modes instantly
+- **Hot Reload Indicator** - Visual feedback when code updates
+- **Development Info Header** - Shows you're in dev mode
+- **Development Notes** - Tips and instructions
+
+**3. Host System Simulation**
+- Applies `.dark` class to `<html>` element (just like the real host)
+- Applies `.dark-scrollbars` class to `<body>`
+- Dispatches theme change events
+- Provides proper service interfaces
+
+### How It Works
+
+```typescript
+// DevStandalone.tsx structure
+DevWrapper Component
+├── Mock Services Creation
+│   ├── createMockThemeService()
+│   ├── createMockApiService()
+│   ├── createMockSettingsService()
+│   └── createMockPageContextService()
+├── Theme State Management
+│   ├── localStorage persistence
+│   ├── DOM class manipulation
+│   └── Event dispatching
+├── Development UI
+│   ├── Theme toggle button
+│   ├── Hot reload indicator
+│   └── Info panels
+└── Plugin Rendering
+    └── <CollectionViewer services={mockServices} />
+```
+
+### Mock Collections Data
+
+The dev server includes 9 sample collections with realistic data:
+- Collection names, descriptions, colors
+- Document counts
+- Created/updated timestamps
+- All fields matching the real API response format
+
+### Customizing DevStandalone
+
+You can modify `src/DevStandalone.tsx` to:
+- Add more mock collections
+- Change API response delays
+- Add custom development controls
+- Test error scenarios
+- Modify theme behavior
+
+---
 
 ## Functional Component Example
 
