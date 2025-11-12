@@ -36,11 +36,11 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "CollectionViewer",
-      library: { type: "var", name: "CollectionViewer" },
+      name: "CollectionViewerFunctional",
+      library: { type: "var", name: "CollectionViewerFunctional" },
       filename: "remoteEntry.js",
       exposes: {
-        "./CollectionViewer": "./src/index",
+        "./CollectionViewerFunctionalModule": "./src/index",
       },
       shared: {
         react: {

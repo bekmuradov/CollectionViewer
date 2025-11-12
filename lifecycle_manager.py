@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-CollectionViewer Plugin Lifecycle Manager
+CollectionViewerFunctional Plugin Lifecycle Manager
 
-This script handles install/update/delete operations for the CollectionViewer plugin.
+This script handles install/update/delete operations for the CollectionViewerFunctional plugin.
 """
 
 import json
@@ -83,16 +83,16 @@ except ImportError:
 
     except ImportError as e:
         logger.error(f"Failed to import BaseLifecycleManager: {e}")
-        raise ImportError("CollectionViewer plugin requires BaseLifecycleManager")
+        raise ImportError("CollectionViewerFunctional plugin requires BaseLifecycleManager")
 
 
-class CollectionViewerLifecycleManager(BaseLifecycleManager):
-    """Lifecycle manager for CollectionViewer plugin"""
+class CollectionViewerFunctionalLifecycleManager(BaseLifecycleManager):
+    """Lifecycle manager for CollectionViewerFunctional plugin"""
 
     def __init__(self, plugins_base_dir: str = None):
         """Initialize the lifecycle manager"""
         self.plugin_data = {
-            "name": "CollectionViewer",
+            "name": "CollectionViewerFunctional",
             "description": "View and browse your document collections",
             "version": "1.0.0",
             "type": "frontend",
@@ -101,12 +101,12 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
             "official": False,
             "author": "BrainDrive Team",
             "compatibility": "1.0.0",
-            "scope": "CollectionViewer",
+            "scope": "CollectionViewerFunctional",
             "bundle_method": "webpack",
             "bundle_location": "dist/remoteEntry.js",
             "is_local": False,
             "long_description": "A simple, functional React component plugin that fetches and displays collections from your BrainDrive instance. Built with modern React hooks and TypeScript.",
-            "plugin_slug": "CollectionViewer",
+            "plugin_slug": "CollectionViewerFunctional",
             "source_type": "local",
             "source_url": "",
             "update_check_url": "",
@@ -119,8 +119,8 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
 
         self.module_data = [
             {
-                "name": "CollectionViewer",
-                "display_name": "Collection Viewer",
+                "name": "CollectionViewerFunctionalModule",
+                "display_name": "Collection Viewer Functional",
                 "description": "View all your document collections with details",
                 "icon": "folder_open",
                 "category": "Data Management",
@@ -141,12 +141,12 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
         ]
 
         # Initialize base class
-        logger.info(f"CollectionViewer: plugins_base_dir - {plugins_base_dir}")
+        logger.info(f"CollectionViewerFunctional: plugins_base_dir - {plugins_base_dir}")
         if plugins_base_dir:
             shared_path = Path(plugins_base_dir) / "shared" / self.plugin_data['plugin_slug'] / f"v{self.plugin_data['version']}"
         else:
             shared_path = Path(__file__).parent
-        logger.info(f"CollectionViewer: shared_path - {shared_path}")
+        logger.info(f"CollectionViewerFunctional: shared_path - {shared_path}")
 
         super().__init__(
             plugin_slug=self.plugin_data['plugin_slug'],
@@ -174,7 +174,7 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
             if not db_result['success']:
                 return db_result
 
-            logger.info(f"CollectionViewer: User installation completed for {user_id}")
+            logger.info(f"CollectionViewerFunctional: User installation completed for {user_id}")
             return {
                 'success': True,
                 'plugin_id': db_result['plugin_id'],
@@ -184,7 +184,7 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
             }
 
         except Exception as e:
-            logger.error(f"CollectionViewer: User installation failed for {user_id}: {e}")
+            logger.error(f"CollectionViewerFunctional: User installation failed for {user_id}: {e}")
             return {'success': False, 'error': str(e)}
 
     async def _perform_user_uninstallation(self, user_id: str, db: AsyncSession) -> Dict[str, Any]:
@@ -199,7 +199,7 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
             if not delete_result['success']:
                 return delete_result
 
-            logger.info(f"CollectionViewer: User uninstallation completed for {user_id}")
+            logger.info(f"CollectionViewerFunctional: User uninstallation completed for {user_id}")
             return {
                 'success': True,
                 'plugin_id': plugin_id,
@@ -207,7 +207,7 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
             }
 
         except Exception as e:
-            logger.error(f"CollectionViewer: User uninstallation failed for {user_id}: {e}")
+            logger.error(f"CollectionViewerFunctional: User uninstallation failed for {user_id}: {e}")
             return {'success': False, 'error': str(e)}
 
     async def _copy_plugin_files_impl(self, user_id: str, target_dir: Path, update: bool = False) -> Dict[str, Any]:
@@ -268,11 +268,11 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
                 shutil.copy2(lifecycle_manager_source, lifecycle_manager_target)
                 copied_files.append('lifecycle_manager.py')
 
-            logger.info(f"CollectionViewer: Copied {len(copied_files)} files to {target_dir}")
+            logger.info(f"CollectionViewerFunctional: Copied {len(copied_files)} files to {target_dir}")
             return {'success': True, 'copied_files': copied_files}
 
         except Exception as e:
-            logger.error(f"CollectionViewer: Error copying files: {e}")
+            logger.error(f"CollectionViewerFunctional: Error copying files: {e}")
             return {'success': False, 'error': str(e)}
 
     async def _validate_installation_impl(self, user_id: str, plugin_dir: Path) -> Dict[str, Any]:
@@ -310,11 +310,11 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
             if bundle_path.stat().st_size == 0:
                 return {'valid': False, 'error': 'Bundle file is empty'}
 
-            logger.info(f"CollectionViewer: Installation validation passed for {user_id}")
+            logger.info(f"CollectionViewerFunctional: Installation validation passed for {user_id}")
             return {'valid': True}
 
         except Exception as e:
-            logger.error(f"CollectionViewer: Validation error: {e}")
+            logger.error(f"CollectionViewerFunctional: Validation error: {e}")
             return {'valid': False, 'error': str(e)}
 
     async def _get_plugin_health_impl(self, user_id: str, plugin_dir: Path) -> Dict[str, Any]:
@@ -349,7 +349,7 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
             return {'healthy': is_healthy, 'details': health_info}
 
         except Exception as e:
-            logger.error(f"CollectionViewer: Health check error: {e}")
+            logger.error(f"CollectionViewerFunctional: Health check error: {e}")
             return {'healthy': False, 'details': {'error': str(e)}}
 
     async def _check_existing_plugin(self, user_id: str, db: AsyncSession) -> Dict[str, Any]:
@@ -382,7 +382,7 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
             return {'exists': False}
 
         except Exception as e:
-            logger.error(f"CollectionViewer: Error checking plugin: {e}")
+            logger.error(f"CollectionViewerFunctional: Error checking plugin: {e}")
             return {'exists': False, 'error': str(e)}
 
     async def _create_database_records(self, user_id: str, db: AsyncSession) -> Dict[str, Any]:
@@ -486,12 +486,12 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
                 modules_created.append(module_id)
 
             await db.commit()
-            logger.info(f"CollectionViewer: Created database records for {plugin_id}")
+            logger.info(f"CollectionViewerFunctional: Created database records for {plugin_id}")
 
             return {'success': True, 'plugin_id': plugin_id, 'modules_created': modules_created}
 
         except Exception as e:
-            logger.error(f"CollectionViewer: Database creation error: {e}")
+            logger.error(f"CollectionViewerFunctional: Database creation error: {e}")
             await db.rollback()
             return {'success': False, 'error': str(e)}
 
@@ -525,12 +525,12 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
                 return {'success': False, 'error': 'Plugin not found'}
 
             await db.commit()
-            logger.info(f"CollectionViewer: Deleted records for {plugin_id}")
+            logger.info(f"CollectionViewerFunctional: Deleted records for {plugin_id}")
 
             return {'success': True, 'deleted_modules': deleted_modules}
 
         except Exception as e:
-            logger.error(f"CollectionViewer: Database deletion error: {e}")
+            logger.error(f"CollectionViewerFunctional: Database deletion error: {e}")
             await db.rollback()
             return {'success': False, 'error': str(e)}
 
@@ -553,7 +553,7 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
             return result
 
         except Exception as e:
-            logger.error(f"CollectionViewer: Install failed: {e}")
+            logger.error(f"CollectionViewerFunctional: Install failed: {e}")
             return {'success': False, 'error': str(e)}
 
     async def delete_plugin(self, user_id: str, db: AsyncSession) -> Dict[str, Any]:
@@ -563,9 +563,9 @@ class CollectionViewerLifecycleManager(BaseLifecycleManager):
 
 # Standalone functions for remote installer compatibility
 async def install_plugin(user_id: str, db: AsyncSession, plugins_base_dir: str = None) -> Dict[str, Any]:
-    manager = CollectionViewerLifecycleManager(plugins_base_dir)
+    manager = CollectionViewerFunctionalLifecycleManager(plugins_base_dir)
     return await manager.install_plugin(user_id, db)
 
 async def delete_plugin(user_id: str, db: AsyncSession, plugins_base_dir: str = None) -> Dict[str, Any]:
-    manager = CollectionViewerLifecycleManager(plugins_base_dir)
+    manager = CollectionViewerFunctionalLifecycleManager(plugins_base_dir)
     return await manager.delete_plugin(user_id, db)
