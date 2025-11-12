@@ -1,0 +1,243 @@
+/* Collection Viewer Styles */
+.collection-viewer {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Header */
+.collection-viewer .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.collection-viewer .header h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+}
+
+.collection-viewer .count {
+  background: #f0f0f0;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Collections Grid */
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* Collection Card */
+.collection-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.collection-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-color: #ccc;
+}
+
+.collection-color {
+  height: 8px;
+  width: 100%;
+}
+
+.collection-content {
+  padding: 20px;
+}
+
+.collection-name {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #222;
+  word-wrap: break-word;
+}
+
+.collection-description {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  min-height: 42px;
+}
+
+/* Collection Meta */
+.collection-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.meta-label {
+  color: #888;
+  font-weight: 500;
+}
+
+.meta-value {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: #666;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #f0f0f0;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Error State */
+.error {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+.error h3 {
+  color: #c33;
+  margin: 0 0 12px 0;
+  font-size: 20px;
+}
+
+.error p {
+  color: #666;
+  margin: 0 0 20px 0;
+  font-size: 14px;
+}
+
+.error button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.error button:hover {
+  background: #2563eb;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.empty-state h3 {
+  font-size: 24px;
+  margin: 0 0 12px 0;
+  color: #666;
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin: 0;
+  color: #999;
+}
+
+/* Dark Theme Support */
+.dark-theme .collection-viewer .header h2 {
+  color: #e0e0e0;
+}
+
+.dark-theme .collection-viewer .count {
+  background: #2a2a2a;
+  color: #aaa;
+}
+
+.dark-theme .collection-card {
+  background: #1e1e1e;
+  border-color: #3a3a3a;
+}
+
+.dark-theme .collection-card:hover {
+  border-color: #555;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .collection-name {
+  color: #e0e0e0;
+}
+
+.dark-theme .collection-description {
+  color: #aaa;
+}
+
+.dark-theme .meta-label {
+  color: #888;
+}
+
+.dark-theme .meta-value {
+  color: #e0e0e0;
+}
+
+.dark-theme .loading {
+  color: #aaa;
+}
+
+.dark-theme .empty-state h3 {
+  color: #aaa;
+}
+
+.dark-theme .empty-state p {
+  color: #888;
+}
