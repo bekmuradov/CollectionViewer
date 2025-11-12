@@ -97,7 +97,7 @@ class CollectionViewerFunctionalLifecycleManager(BaseLifecycleManager):
             "version": "1.0.0",
             "type": "frontend",
             "icon": "folder_open",
-            "category": "Data Management",
+            "category": "ai",
             "official": False,
             "author": "BrainDrive Team",
             "compatibility": "1.0.0",
@@ -107,34 +107,40 @@ class CollectionViewerFunctionalLifecycleManager(BaseLifecycleManager):
             "is_local": False,
             "long_description": "A simple, functional React component plugin that fetches and displays collections from your BrainDrive instance. Built with modern React hooks and TypeScript.",
             "plugin_slug": "CollectionViewerFunctional",
-            "source_type": "local",
-            "source_url": "",
-            "update_check_url": "",
+            "source_type": "github",
+            "source_url": "https://github.com/bekmuradov/CollectionViewer",
+            "update_check_url": "https://github.com/bekmuradov/CollectionViewer/releases/latest",
             "last_update_check": None,
             "update_available": False,
             "latest_version": None,
             "installation_type": "remote",
-            "permissions": ["api.access"]
+            "permissions": ["storage.read", "storage.write", "api.access"]
         }
 
         self.module_data = [
             {
                 "name": "CollectionViewerFunctionalModule",
-                "display_name": "Collection Viewer Functional",
+                "display_name": "Collection Viewer",
                 "description": "View all your document collections with details",
                 "icon": "folder_open",
-                "category": "Data Management",
+                "category": "ai",
                 "priority": 1,
                 "props": {},
                 "config_fields": {},
                 "messages": {},
-                "required_services": {},
+                "required_services": {
+                    "api": {"methods": ["get", "post", "put", "delete", "postStreaming"], "version": "1.0.0"},
+                    "event": {"methods": ["sendMessage", "subscribeToMessages", "unsubscribeFromMessages"], "version": "1.0.0"},
+                    "theme": {"methods": ["getCurrentTheme", "addThemeChangeListener", "removeThemeChangeListener"], "version": "1.0.0"},
+                    "settings": {"methods": ["getSetting", "setSetting", "getSettingDefinitions"], "version": "1.0.0"},
+                    "pageContext": {"methods": ["getCurrentPageContext", "onPageContextChange"], "version": "1.0.0"}
+                },
                 "dependencies": [],
                 "layout": {
-                    "minWidth": 4,
-                    "minHeight": 4,
+                    "minWidth": 6,
+                    "minHeight": 6,
                     "defaultWidth": 8,
-                    "defaultHeight": 6
+                    "defaultHeight": 8
                 },
                 "tags": ["collections", "viewer", "documents", "data"]
             }
